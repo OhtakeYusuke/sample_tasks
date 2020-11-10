@@ -15,11 +15,6 @@ class Travel
   def info
     puts "NO.#{@@count} #{@place} #{@price.to_s.reverse.scan(/.{1,3}/).join(',').reverse}円"
   end
-
-  def confirm
-    puts "#{@place}ですね"
-  end
-
 end
 
 # resultメソッドをクラス外へ出すように変更
