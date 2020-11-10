@@ -1,54 +1,41 @@
 require "./travel_system"
 
-# 旅行先のインスタンス
-
-travel2 = Travel.new(place: "北海道", price: 20000)
-travel3 = Travel.new(place: "九州", price: 15000)
-travels = [travel1, travel2, travel3]
-
 puts <<~TEXT
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  旅行先を選択してください
-  価格は１人あたりの代金（税抜き）です
+旅行先を選択してください
+価格は１人あたりの代金（税抜き）です
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TEXT
 
-# 旅行先の提示
-travels.each.with_index(1) do |travel, i|
-  print "No.#{i} "
-  travel.info
+# インスタンス生成のためのデータをハッシュに一度格納するに変更
+travels = [ {place: "九州", price: 15000},
+            {place: "北海道", price: 20000},
+            {place: "沖縄", price: 10000}
+]
+
+# 生成時にinitializeメソッドが働くので、生成とinfoメソッドを配列で同時に生成
+travels.each do |travel|
+  Travel.new(place: travel[:place], price: travel[:price]).info
 end
 
 print "行き先を番号で選択してください<< "
 option = gets.chomp.tr("０-９","0-9").to_i
 
-# 番号不一致のときの対処
-while option > 3 
+# Rangeクラスが使えないか試行錯誤してみたけれどうまくいかず・・・もう少し考えてみます
+until option <= travels.size && option >= 1
   puts "---------------------"
   print "入力が違います。もう一度お願いします<< "
     option = gets.chomp.tr("０-９","0-9").to_i
 end
 
-# 行き先の確認
+# option - 1 がもっとみやすくならないか考え中
 puts "-------------------"
-  case option
-  when 1
-    travel1.confirm
-    travel = travel1
-  when 2
-    travel2.confirm
-    travel = travel2
-  when 3
-    travel3.confirm
-    travel = travel3
-  end
+puts "#{travels[option - 1][:place]}ですね"
 
   # 人数の確認
 print "人数を教えてください<< "
 number = gets.chomp.tr("０-９","0-9").to_i
 
-  # 確定料金の確認
+  # resultメソッドをインスタンスメソッドから外すよう変更
 puts "-------------------"
-travel = Travel.new(place: travel.place, price: travel.price, number: number)
-travel.result
-puts "-------------------"
+result(number,option,travels)
