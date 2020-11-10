@@ -25,16 +25,23 @@ option = gets.chomp.tr("０-９","0-9").to_i
 until option <= travels.size && option >= 1
   puts "---------------------"
   print "入力が違います。もう一度お願いします<< "
-    option = gets.chomp.tr("０-９","0-9").to_i
+  option = gets.chomp.tr("０-９","0-9").to_i
 end
 
 # option - 1 がもっとみやすくならないか考え中
 puts "-------------------"
 puts "#{travels[option - 1][:place]}ですね"
 
-  # 人数の確認
+# 人数の確認
 print "人数を教えてください<< "
 number = gets.chomp.tr("０-９","0-9").to_i
+
+# 人数に関してもチェック追加
+until number >= 1
+  puts "-------------------"
+  print "人数は１人以上にしてください"
+  number = gets.chomp.tr("０-９","0-9").to_i
+end
 
   # resultメソッドをインスタンスメソッドから外すよう変更
 puts "-------------------"
