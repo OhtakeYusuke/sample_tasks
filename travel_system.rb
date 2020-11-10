@@ -3,12 +3,11 @@ class Travel
   # クラス変数にしないとうまくいかなかったので定義。ここはもう少し学習したい
   @@count = 0
 
-  attr_accessor :place, :price, :number
+  attr_accessor :place, :price
 # 試験的にキーワード引数でデフォルト値を入れてみる
   def initialize(place: "未入力", price: 0)
     @place = place
     @price = price
-    @number = number
     # インスタンス生成時に数字が上がれば良いのでいいと思い変更。検索したらいいのがあったので参考にしてみて変更
     @@count += 1
   end
