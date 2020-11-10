@@ -24,11 +24,12 @@ end
 
 # resultメソッドをクラス外へ出すように変更
 def result(number,option,travels)
+  # cost部分がDRYに反していたので最適化できそうだったので修正
+  cost = travels[option - 1][:price] * number
   if number >= 5
-    cost = travels[option - 1][:price] * number * 0.9
+    cost *= 0.9
     puts "５人以上なので合計#{cost.floor.to_s.reverse.scan(/.{1,3}/).join(',').reverse}円です"
   else
-    cost = travels[option - 1][:price] * number
     puts "合計#{cost.floor}円です"
   end
 end
