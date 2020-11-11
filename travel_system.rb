@@ -9,18 +9,22 @@ class Travel
     @place = place
     @price = price
     # インスタンス生成時に数字が上がれば良いのでいいと思い変更。検索したらいいのがあったので参考にしてみて変更
-    @@count += 1
+    @id = @@count += 1
   end
 
   def info
-    puts "NO.#{@@count} #{@place} #{@price.to_s.reverse.scan(/.{1,3}/).join(',').reverse}円"
+    puts "NO.#{@id} #{@place} #{@price.to_s.reverse.scan(/.{1,3}/).join(',').reverse}円"
+  end
+
+  def id
+    @id
   end
 end
 
 # resultメソッドをクラス外へ出すように変更
 def result(number,option,travels)
   # cost部分がDRYに反していたので最適化できそうだったので修正
-  cost = travels[option - 1][:price] * number
+  cost = travels[option - 1].price * number
   if number >= 5
     cost *= 0.9
     puts "５人以上なので合計#{cost.floor.to_s.reverse.scan(/.{1,3}/).join(',').reverse}円です"
